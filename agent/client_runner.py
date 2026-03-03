@@ -42,8 +42,7 @@ async def run(room: Optional[str] = None):
     buffer_max = CONNECTION_CONFIG["message_buffer_max"]
     memory_interval = CONNECTION_CONFIG["memory_interval"]
 
-    msg_count = 0
-    dlt_count = 0
+    
     retry_attempt = 0
     base_delay = CONNECTION_CONFIG["initial_retry_delay"]
     max_delay = CONNECTION_CONFIG["max_retry_delay"]
@@ -51,6 +50,8 @@ async def run(room: Optional[str] = None):
     msg_buffer = []
 
     while True:
+        msg_count = 0
+        dlt_count = 0
         cookie = session_manager.get_session(force_refresh=False)
         if cookie is None:
             delay = min(base_delay * (2 ** retry_attempt), max_delay)
